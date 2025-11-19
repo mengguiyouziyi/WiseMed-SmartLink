@@ -1,22 +1,105 @@
-term,category,zh_CN,hebei_dialect,en,notes
-血糖,慢病管理,血糖,血糖儿,Blood Glucose,常见用于糖尿病
-胰岛素,用药,胰岛素,胰岛素,Blood Insulin,需强调剂量
-高血压,慢病,高血压,高血压,Hypertension,
-咳嗽,主诉,咳嗽,咳嗽, Cough,
-发烧,主诉,发热,发烧,Fever,
-肺结节,影像,肺结节,肺疙瘩,Lung Nodule,
-CT,影像,CT,CT,CT,保留英文
-核磁共振,影像,核磁,核磁,MR,
-药物过敏,安全提示,药物过敏,药犯,Drug Allergy,
-妊娠,安全提示,妊娠,怀胎,Pregnancy,
-宗教禁忌,安全提示,宗教禁忌,教门忌,Riligious Taboo,
-剂量,用药,剂量,药量,Dosage,
-每日三次,用药,每日三次,天天三回,Three times a day,
-禁食,用药,禁食,莫吃禁口,Fasting,
-翻译转人工,流程,翻译转人工,转人工,Escalate to human,
-低置信度,流程,低置信度,没把握,Low Confidence,
-注射,操作,注射,打针,Injection,
-输液,操作,输液,吊水,Infusion,
-随访,流程,随访,回访,Follow-up,
-医保控费,政策,医保控费,医保卡控费,Insurance Cost Control,
-医共体,政策,医共体,医共体,Medical Alliance,
+chinese,dialect,english,notes
+肺结节,肺结节,pulmonary nodule,常见影像学发现
+冠心病,冠心病,coronary heart disease,心血管疾病
+高血压,高血压,hypertension,慢性病
+糖尿病,糖尿病,diabetes mellitus,代谢性疾病
+心肌梗死,心肌梗死,myocardial infarction,急性心血管事件
+脑卒中,脑卒中,stroke,脑血管意外
+肿瘤,肿瘤,tumor,新生物
+癌症,癌症,cancer,恶性肿瘤
+肺炎,肺炎,pneumonia,呼吸系统感染
+支气管炎,支气管炎,bronchitis,呼吸道炎症
+哮喘,哮喘,asthma,慢性呼吸道疾病
+肺气肿,肺气肿,emphysema,慢性阻塞性肺病
+胸腔积液,胸腔积液,pleural effusion,胸膜腔液体积聚
+心力衰竭,心力衰竭,heart failure,心脏功能不全
+心律失常,心律失常,arrhythmia,心跳节律异常
+心绞痛,心绞痛,angina pectoris,冠心病症状
+动脉硬化,动脉硬化,arteriosclerosis,血管病变
+静脉曲张,静脉曲张,varicose veins,静脉扩张
+血栓,血栓,thrombus,血管内凝块
+栓塞,栓塞,embolism,血管阻塞
+贫血,贫血,anemia,血液疾病
+白血病,白血病,leukemia,血液系统恶性肿瘤
+淋巴瘤,淋巴瘤,lymphoma,淋巴系统肿瘤
+骨折,骨折,fracture,骨骼损伤
+脱位,脱位,dislocation,关节损伤
+扭伤,扭伤,sprain,软组织损伤
+挫伤,挫伤,contusion,钝器伤
+烧伤,烧伤,burn,热损伤
+冻伤,冻伤,frostbite,冷损伤
+感染,感染,infection,病原体侵入
+炎症,炎症,inflammation,组织反应
+溃疡,溃疡,ulcer,黏膜缺损
+出血,出血,hemorrhage,血液外流
+水肿,水肿,edema,组织液体积聚
+发热,发热,fever,体温升高
+咳嗽,咳嗽,cough,呼吸道症状
+咳痰,咳痰,expectoration,痰液排出
+呼吸困难,呼吸困难,dyspnea,呼吸症状
+胸痛,胸痛,chest pain,胸部不适
+腹痛,腹痛,abdominal pain,腹部不适
+头痛,头痛,headache,头部疼痛
+头晕,头晕,dizziness,平衡障碍
+恶心,恶心,nausea,消化道症状
+呕吐,呕吐,vomiting,胃内容物排出
+腹泻,腹泻,diarrhea,大便次数增多
+便秘,便秘,constipation,排便困难
+黄疸,黄疸,jaundice,皮肤黄染
+皮疹,皮疹,rash,皮肤病变
+瘙痒,瘙痒,pruritus,皮肤症状
+肝炎,肝炎,hepatitis,肝脏炎症
+肝硬化,肝硬化,cirrhosis,肝脏纤维化
+脂肪肝,脂肪肝,fatty liver,肝脏脂肪沉积
+胆结石,胆结石,gallstone,胆囊结石
+胰腺炎,胰腺炎,pancreatitis,胰腺炎症
+胃炎,胃炎,gastritis,胃黏膜炎症
+胃溃疡,胃溃疡,gastric ulcer,胃黏膜缺损
+十二指肠溃疡,十二指肠溃疡,duodenal ulcer,十二指肠黏膜缺损
+肠梗阻,肠梗阻,intestinal obstruction,肠道阻塞
+阑尾炎,阑尾炎,appendicitis,阑尾炎症
+肾炎,肾炎,nephritis,肾脏炎症
+肾结石,肾结石,kidney stone,肾脏结石
+尿路感染,尿路感染,urinary tract infection,泌尿系统感染
+前列腺炎,前列腺炎,prostatitis,前列腺炎症
+前列腺增生,前列腺增生,benign prostatic hyperplasia,前列腺良性增生
+甲状腺功能亢进,甲亢,hyperthyroidism,甲状腺激素过多
+甲状腺功能减退,甲减,hypothyroidism,甲状腺激素不足
+甲状腺结节,甲状腺结节,thyroid nodule,甲状腺肿块
+骨质疏松,骨质疏松,osteoporosis,骨密度降低
+关节炎,关节炎,arthritis,关节炎症
+痛风,痛风,gout,尿酸代谢异常
+类风湿关节炎,类风湿,rheumatoid arthritis,自身免疫性关节炎
+强直性脊柱炎,强直性脊柱炎,ankylosing spondylitis,脊柱关节病
+腰椎间盘突出,腰突,lumbar disc herniation,腰椎病变
+颈椎病,颈椎病,cervical spondylosis,颈椎退行性变
+白内障,白内障,cataract,晶状体混浊
+青光眼,青光眼,glaucoma,眼压升高
+视网膜病变,视网膜病变,retinopathy,视网膜损伤
+中耳炎,中耳炎,otitis media,中耳炎症
+鼻窦炎,鼻窦炎,sinusitis,鼻窦炎症
+咽炎,咽炎,pharyngitis,咽部炎症
+扁桃体炎,扁桃体炎,tonsillitis,扁桃体炎症
+牙周炎,牙周炎,periodontitis,牙周组织炎症
+龋齿,龋齿,dental caries,牙齿蛀牙
+抑郁症,抑郁症,depression,情绪障碍
+焦虑症,焦虑症,anxiety disorder,焦虑障碍
+失眠,失眠,insomnia,睡眠障碍
+帕金森病,帕金森,Parkinson's disease,神经退行性疾病
+阿尔茨海默病,老年痴呆,Alzheimer's disease,认知障碍
+癫痫,癫痫,epilepsy,神经系统疾病
+偏头痛,偏头痛,migraine,头痛类型
+三叉神经痛,三叉神经痛,trigeminal neuralgia,面部神经痛
+带状疱疹,带状疱疹,herpes zoster,病毒感染
+湿疹,湿疹,eczema,皮肤炎症
+银屑病,牛皮癣,psoriasis,慢性皮肤病
+荨麻疹,荨麻疹,urticaria,皮肤过敏
+过敏性鼻炎,过敏性鼻炎,allergic rhinitis,鼻腔过敏
+哮喘,哮喘,asthma,气道高反应性
+慢性阻塞性肺病,慢阻肺,COPD,慢性呼吸道疾病
+肺结核,肺结核,pulmonary tuberculosis,结核分枝杆菌感染
+艾滋病,艾滋病,AIDS,获得性免疫缺陷综合征
+乙型肝炎,乙肝,hepatitis B,乙肝病毒感染
+丙型肝炎,丙肝,hepatitis C,丙肝病毒感染
+流感,流感,influenza,流行性感冒
+新冠肺炎,新冠,COVID-19,新型冠状病毒肺炎

@@ -1,31 +1,21 @@
-# 慧医智联 · 基层医疗AI诊断与语言服务平台 (WiseMed SmartLink)
+# 慧医智联 · 基层医疗AI诊断与语言服务平台# WiseMed-SmartLink
 
-![Status](https://img.shields.io/badge/Status-PoC%20%2F%20Sprint%200-blue)
+**智慧医疗互联平台 PoC** - 面向基层医疗的 AI 辅助诊断、多语言翻译与 SaaS 服务平台
 
-该仓库承载创业计划执行文档与PoC代码，致力于解决中国基层医疗“能力不足 + 语言壁垒”双痛点。
+![Status](https://img.shields.io/badge/status-PoC%20Development-blue)
+![Services](https://img.shields.io/badge/services-4%2F4%20running-success)
+![Docker](https://img.shields.io/badge/docker-compose%20ready-informational)
 
-## 🛠️ 技术栈 (Tech Stack)
+## 📋 项目概述
 
-- **核心框架**: FastAPI (Python), React (Web App - Planned)
-- **医疗影像**: Orthanc (DICOM Server), MONAI (AI Inference), OHIF (Viewer)
-- **多语言**: ESPnet (ASR/NMT), OpenNMT
-- **基础设施**: Docker Compose, K3s (Edge), Redpanda (Kafka compatible), PostgreSQL
-- **可观测性**: OpenTelemetry, Grafana, Prometheus
-
-## 📂 项目结构
-
-- **`services/`**: 微服务源码
-    - `pacs-gw-service`: 影像网关服务 (FastAPI)
-    - `ai-infer-service`: AI 推理服务 (Planned)
-    - `nmt-asr-service`: 语音翻译服务 (Planned)
-- **`infra/`**: 基础设施配置 (Docker Compose, K8s, Terraform)
-- **`scripts/`**: 运维与工具脚本 (Edge Bootstrap, Metrics, Data Processing)
-- **`data/`**: 示例数据、术语表与语料采集剧本
-- **`docs/`**: 全面项目文档
+WiseMed-SmartLink 是一个面向基层医疗机构的智能化平台,整合了:
+- 🏥 **AI 影像辅助诊断** - 基于 MONAI 的肺结节检测
+- 🗣️ **医学多语言翻译** - 方言 ASR + 医学术语翻译
+- 📊 **SaaS 基础服务** - 租户管理、权限控制、数据分析
+- 🔒 **合规与安全** - SBOM、漏洞扫描、审计日志
 
 ## 🚀 快速开始
 
-详细部署指南请参考 [PoC 部署文档](docs/devops/poc-deployment.md)。
 
 ### 环境要求
 - Docker & Docker Compose
