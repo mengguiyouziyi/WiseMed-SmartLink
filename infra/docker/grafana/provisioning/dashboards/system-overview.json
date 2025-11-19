@@ -1,0 +1,160 @@
+{
+  "dashboard": {
+    "title": "WiseMed-SmartLink System Overview",
+    "tags": ["wisemed", "overview", "poc"],
+    "timezone": "browser",
+    "editable": true,
+    "graphTooltip": 1,
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "refresh": "30s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Services Status",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "up{job=~\".*-service\"}",
+            "legendFormat": "{{job}}",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {"h": 6, "w": 12, "x": 0, "y": 0},
+        "options": {
+          "colorMode": "background",
+          "graphMode": "none",
+          "orientation": "auto"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [
+              {"type": "value", "value": "0", "text": "DOWN", "color": "red"},
+              {"type": "value", "value": "1", "text": "UP", "color": "green"}
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 1, "color": "green"}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "Container Count",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "count(container_last_seen)",
+            "legendFormat": "Total Containers",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {"h": 6, "w": 6, "x": 12, "y": 0},
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "orientation": "auto"
+        }
+      },
+      {
+        "id": 3,
+        "title": "System Uptime",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "time() - process_start_time_seconds{job=\"prometheus\"}",
+            "legendFormat": "Prometheus Uptime",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {"h": 6, "w": 6, "x": 18, "y": 0},
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "orientation": "auto"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        }
+      },
+      {
+        "id": 4,
+        "title": "Container Memory Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "container_memory_usage_bytes{name=~\".*-service|orthanc|postgres|redpanda\"} / 1024 / 1024",
+            "legendFormat": "{{name}}",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 6},
+        "yaxes": [
+          {"format": "decmbytes", "label": "Memory (MB)"},
+          {"format": "short"}
+        ],
+        "legend": {
+          "show": true,
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "max": true
+        }
+      },
+      {
+        "id": 5,
+        "title": "Container CPU Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(container_cpu_usage_seconds_total{name=~\".*-service|orthanc|postgres\"}[5m]) * 100",
+            "legendFormat": "{{name}}",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 6},
+        "yaxes": [
+          {"format": "percent", "label": "CPU %"},
+          {"format": "short"}
+        ],
+        "legend": {
+          "show": true,
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "max": true
+        }
+      },
+      {
+        "id": 6,
+        "title": "Network I/O",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(container_network_receive_bytes_total[5m])",
+            "legendFormat": "RX {{name}}",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(container_network_transmit_bytes_total[5m])",
+            "legendFormat": "TX {{name}}",
+            "refId": "B"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 14},
+        "yaxes": [
+          {"format": "Bps", "label": "Bytes/sec"},
+          {"format": "short"}
+        ]
+      }
+    ]
+  }
+}
