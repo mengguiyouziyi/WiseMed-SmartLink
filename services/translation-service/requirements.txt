@@ -2,7 +2,7 @@ fastapi==0.110.0
 uvicorn[standard]==0.29.0
 python-multipart==0.0.9
 # Temporarily disabled for PoC environment verification
-# openai-whisper==20231117
+openai-whisper==20231117
 numpy==1.26.4
 pandas==2.2.0
 python-Levenshtein==0.25.0

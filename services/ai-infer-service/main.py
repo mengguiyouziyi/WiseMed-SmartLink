@@ -7,9 +7,27 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="WiseMed AI Inference Service", version="0.1.0")
 
-# Placeholder for MONAI model loading
-# from monai.networks.nets import DenseNet121
-# model = DenseNet121(spatial_dims=2, in_channels=1, out_channels=2)
+# Try to load MONAI model
+MODEL_LOADED = False
+model = None
+DEVICE = "cpu"
+
+try:
+    import torch
+    from monai.networks.nets import DenseNet121
+    
+    DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+    logger.info(f"Initializing MONAI DenseNet121 on {DEVICE}...")
+    
+    # Initialize model structure (weights would need to be loaded from file in real scenario)
+    model = DenseNet121(spatial_dims=2, in_channels=1, out_channels=2).to(DEVICE)
+    MODEL_LOADED = True
+    logger.info("MONAI model initialized successfully")
+    
+except ImportError:
+    logger.warning("MONAI/Torch not found, falling back to mock inference")
+except Exception as e:
+    logger.error(f"Failed to initialize MONAI model: {e}")
 
 
 @app.get("/healthz")
@@ -17,7 +35,8 @@ async def health_check():
     return {
         "status": "ok",
         "service": "ai-infer-service",
-        "model_loaded": False
+        "model_loaded": MODEL_LOADED,
+        "device": DEVICE
     }
 
 
