@@ -1,0 +1,30 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "cornerstone-core": "^2.6.1",
+    "cornerstone-wado-image-loader": "^4.13.2",
+    "date-fns": "^4.1.0",
+    "dicom-parser": "^1.8.21",
+    "lucide-react": "^0.554.0",
+    "next": "^14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.33",
+    "typescript": "^5"
+  }
+}
