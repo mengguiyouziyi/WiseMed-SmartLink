@@ -1,0 +1,124 @@
+version: "3.9"
+
+x-default-env: &default-env
+  KEYCLOAK_ADMIN: admin
+  KEYCLOAK_ADMIN_PASSWORD: changeMe123
+  POSTGRES_USER: smartlink
+  POSTGRES_PASSWORD: smartlink
+  MINIO_ROOT_USER: minioadmin
+  MINIO_ROOT_PASSWORD: changeMe123
+
+services:
+  redpanda:
+    image: redpandadata/redpanda:v23.2.14
+    command:
+      - redpanda
+      - start
+      - --smp=1
+      - --overprovisioned
+      - --node-id=0
+      - --kafka-addr=PLAINTEXT://0.0.0.0:9092
+      - --advertise-kafka-addr=PLAINTEXT://redpanda:9092
+      - --pandaproxy-addr=0.0.0.0:8082
+      - --advertise-pandaproxy-addr=redpanda:8082
+    ports:
+      - "9092:9092"
+      - "8082:8082"
+      - "9644:9644"
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-smartlink}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-smartlink}
+      POSTGRES_DB: smartlink
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  minio:
+    image: minio/minio:RELEASE.2024-04-18T19-09-19Z
+    command: server /data --console-address :9001
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-changeMe123}
+    volumes:
+      - minio-data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0
+    command: ["start-dev"]
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-changeMe123}
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_DATABASE: smartlink
+      KC_DB_USERNAME: ${POSTGRES_USER:-smartlink}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-smartlink}
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+
+  orthanc:
+    image: jodogne/orthanc-plugins:1.12.1
+    environment:
+      ORTHANC__Name: "SmartLink Orthanc"
+      ORTHANC__HttpPort: 8042
+      ORTHANC__DicomPort: 4242
+      ORTHANC__PostgreSQL: "true"
+      ORTHANC__PostgreSQL__Host: postgres
+      ORTHANC__PostgreSQL__Database: smartlink
+      ORTHANC__PostgreSQL__Username: ${POSTGRES_USER:-smartlink}
+      ORTHANC__PostgreSQL__Password: ${POSTGRES_PASSWORD:-smartlink}
+    depends_on:
+      - postgres
+    ports:
+      - "8042:8042"
+      - "4242:4242"
+
+  monai-infer:
+    image: projectmonai/monai-deploy-app-sdk:latest
+    command: ["bash","-lc","python -m pip install monai && sleep infinity"]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    volumes:
+      - ../..:/workspace:ro
+    profiles: [central]
+
+  nmt-asr:
+    image: espnet/espnet:cuda11.7-cudnn8-runtime
+    command: ["bash","-lc","sleep infinity"]
+    volumes:
+      - ../..:/workspace:ro
+    profiles: [central]
+
+  bahmni:
+    image: bahmni/bahmni-standard:0.93
+    ports:
+      - "8050:8050"
+    profiles: [central]
+
+  grafana:
+    image: grafana/grafana:10.4.1
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redpanda
+
+volumes:
+  pgdata:
+  minio-data:
