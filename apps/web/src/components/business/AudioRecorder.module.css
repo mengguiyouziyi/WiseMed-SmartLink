@@ -1,0 +1,72 @@
+.container {
+    width: 100%;
+    padding: 2rem;
+    background-color: hsl(var(--card));
+    border-radius: 0.75rem;
+    border: 1px solid hsl(var(--border));
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.recordingIndicator {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background-color: hsl(var(--destructive) / 0.1);
+    border: 1px solid hsl(var(--destructive) / 0.3);
+    border-radius: 0.5rem;
+}
+
+.pulse {
+    width: 12px;
+    height: 12px;
+    background-color: hsl(var(--destructive));
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+    }
+}
+
+.recordingText {
+    font-weight: 600;
+    color: hsl(var(--destructive));
+}
+
+.timer {
+    font-family: 'Courier New', monospace;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: hsl(var(--foreground));
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
