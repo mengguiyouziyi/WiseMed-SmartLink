@@ -1,0 +1,103 @@
+.container {
+    width: 100%;
+}
+
+.dropzone {
+    border: 2px dashed hsl(var(--border));
+    border-radius: 0.75rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: hsl(var(--card));
+    position: relative;
+}
+
+.dropzone:hover {
+    border-color: hsl(var(--primary));
+    background-color: hsl(var(--primary) / 0.05);
+}
+
+.dragging {
+    border-color: hsl(var(--primary));
+    background-color: hsl(var(--primary) / 0.1);
+    transform: scale(1.02);
+}
+
+.uploadIcon {
+    color: hsl(var(--muted-foreground));
+    margin: 0 auto 1rem;
+}
+
+.title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    margin: 0 0 0.5rem;
+}
+
+.subtitle {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+    margin: 0 0 1rem;
+}
+
+.formats {
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+}
+
+.fileInput {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.preview {
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    background-color: hsl(var(--card));
+}
+
+.previewHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.fileInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: hsl(var(--foreground));
+}
+
+.fileName {
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.fileSize {
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.imagePreview {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background-color: hsl(var(--muted) / 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+}
+
+.previewImage {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+}

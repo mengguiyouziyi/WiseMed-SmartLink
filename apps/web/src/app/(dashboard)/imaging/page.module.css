@@ -1,0 +1,109 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.heading {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: hsl(var(--foreground));
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 1.5rem;
+    min-height: 600px;
+}
+
+.uploadPanel {
+    display: flex;
+    flex-direction: column;
+}
+
+.viewerPanel {
+    display: flex;
+    flex-direction: column;
+    min-height: 600px;
+}
+
+.actions {
+    margin-top: 1.5rem;
+}
+
+.analyzeButton {
+    width: 100%;
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background-color: hsl(var(--destructive) / 0.1);
+    border: 1px solid hsl(var(--destructive) / 0.3);
+    border-radius: 0.5rem;
+    color: hsl(var(--destructive));
+    font-size: 0.875rem;
+}
+
+.result {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background-color: hsl(var(--primary) / 0.05);
+    border: 1px solid hsl(var(--primary) / 0.2);
+    border-radius: 0.5rem;
+}
+
+.resultTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    margin: 0 0 1rem;
+}
+
+.resultGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.resultItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.resultLabel {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.resultValue {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+}
+
+.benign {
+    color: #10b981;
+}
+
+.malignant {
+    color: #ef4444;
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
