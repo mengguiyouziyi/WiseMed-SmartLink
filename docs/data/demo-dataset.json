@@ -1,0 +1,50 @@
+{
+  "demo_cases": [
+    {
+      "id": "case_001",
+      "scenario": "心血管急诊",
+      "description": "患者主诉胸痛，怀疑心肌梗死",
+      "input_text": "患者主诉胸痛，持续约30分钟，伴有大汗淋漓。既往有高血压病史。心电图显示ST段抬高。",
+      "expected_translation": {
+        "terms": ["胸痛", "心肌梗死", "高血压", "ST段抬高"],
+        "en_terms": ["chest pain", "myocardial infarction", "hypertension", "ST segment elevation"]
+      }
+    },
+    {
+      "id": "case_002",
+      "scenario": "呼吸科门诊",
+      "description": "慢性阻塞性肺疾病(COPD)复发",
+      "input_text": "患者出现呼吸困难，咳嗽加重，咳黄痰。肺部听诊可闻及哮鸣音。诊断为慢性阻塞性肺疾病急性加重。",
+      "expected_translation": {
+        "terms": ["呼吸困难", "咳嗽", "哮鸣音", "慢性阻塞性肺疾病"],
+        "en_terms": ["dyspnea", "cough", "wheezing", "chronic obstructive pulmonary disease"]
+      }
+    },
+    {
+      "id": "case_003",
+      "scenario": "影像科报告",
+      "description": "肺部CT检查结果",
+      "input_text": "右肺上叶可见一结节影，边缘毛糙，分叶状。建议进一步检查排除肺癌可能。",
+      "expected_translation": {
+        "terms": ["结节", "肺癌"],
+        "en_terms": ["nodule", "lung cancer"]
+      }
+    }
+  ],
+  "mock_patients": [
+    {
+      "id": "P001",
+      "name": "张三",
+      "age": 65,
+      "gender": "Male",
+      "history": ["Hypertension", "Diabetes"]
+    },
+    {
+      "id": "P002",
+      "name": "李四",
+      "age": 42,
+      "gender": "Female",
+      "history": ["Asthma"]
+    }
+  ]
+}
