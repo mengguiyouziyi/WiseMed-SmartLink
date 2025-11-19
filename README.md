@@ -1,19 +1,63 @@
-# 慧医智联 · 基层医疗AI诊断与语言服务平台
+# 慧医智联 · 基层医疗AI诊断与语言服务平台 (WiseMed SmartLink)
 
-该仓库承载创业计划执行文档，包括技术架构、语料采集、合规SOP等，支撑京津冀基层医疗AI诊断 + 多语言服务PoC。
+![Status](https://img.shields.io/badge/Status-PoC%20%2F%20Sprint%200-blue)
 
-## 当前内容
-- `docs/poc/architecture.md`：PoC架构（影像推理、翻译、基层SaaS、联邦学习、事件总线）。
-- `docs/data/dialect-asr-plan.md`：方言语料采集与ASR/NMT调优方案。
-- `docs/governance/compliance-and-pilot-sop.md`：SaMD合规体系与试点SOP。
+该仓库承载创业计划执行文档与PoC代码，致力于解决中国基层医疗“能力不足 + 语言壁垒”双痛点。
 
-## 下一步优先事项
-1. 搭建 PoC 环境：容器化 Orthanc + MONAI Deploy + ESPnet Demo，形成最小可用链路。
-2. 启动方言采集：完善剧本、术语词表与知情同意；安排衡水、保定两地采集团队。
-3. 完成 SaMD 文档骨架：URS/SRS/SVVP/SBOM 模板，纳入版本管理。
-4. 建立 DevOps 基线：Git 仓库、CI（Lint/Test/SBOM）、安全扫描、部署脚本。
+## 🛠️ 技术栈 (Tech Stack)
 
-## 沟通节奏
-- 周例会：研发/算法/合规/客户成功同步 PoC 进展。
-- 月度：向管理层汇报指标与风险，更新路线图。
-- 按需：政府/合作伙伴对接材料更新。
+- **核心框架**: FastAPI (Python), React (Web App - Planned)
+- **医疗影像**: Orthanc (DICOM Server), MONAI (AI Inference), OHIF (Viewer)
+- **多语言**: ESPnet (ASR/NMT), OpenNMT
+- **基础设施**: Docker Compose, K3s (Edge), Redpanda (Kafka compatible), PostgreSQL
+- **可观测性**: OpenTelemetry, Grafana, Prometheus
+
+## 📂 项目结构
+
+- **`services/`**: 微服务源码
+    - `pacs-gw-service`: 影像网关服务 (FastAPI)
+    - `ai-infer-service`: AI 推理服务 (Planned)
+    - `nmt-asr-service`: 语音翻译服务 (Planned)
+- **`infra/`**: 基础设施配置 (Docker Compose, K8s, Terraform)
+- **`scripts/`**: 运维与工具脚本 (Edge Bootstrap, Metrics, Data Processing)
+- **`data/`**: 示例数据、术语表与语料采集剧本
+- **`docs/`**: 全面项目文档
+
+## 🚀 快速开始
+
+详细部署指南请参考 [PoC 部署文档](docs/devops/poc-deployment.md)。
+
+### 环境要求
+- Docker & Docker Compose
+- Python 3.11+
+- Make
+
+### 常用命令
+```bash
+make help             # 查看所有命令帮助
+make setup            # 安装开发依赖
+make compose-up       # 启动完整 PoC 环境 (Central Profile)
+make compose-edge     # 启动边缘节点最小集 (Edge Profile)
+make metrics          # 运行试点评估指标脚本
+make asr              # 运行 ASR 评估脚本
+```
+
+## 📚 文档索引
+
+### 核心规划
+- [PoC 架构设计](docs/poc/architecture.md)
+- [实施 Backlog (Sprint 0-4)](docs/poc/backlog.md)
+- [接口与 DevOps 规范](docs/poc/interfaces-devops.md)
+
+### 数据与算法
+- [方言语料采集与调优方案](docs/data/dialect-asr-plan.md)
+- [方言采集剧本](docs/data/dialect-script.md)
+- [术语表与热词策略](docs/data/glossary/hotword-strategy.md)
+
+### 合规与治理 (SaMD)
+- [合规体系与试点 SOP](docs/governance/compliance-and-pilot-sop.md)
+- [风险矩阵与 CAPA](docs/governance/risk-matrix-capa.md)
+- [SOUP 第三方组件登记](docs/templates/SOUP-register.md)
+
+## 🤝 贡献
+请阅读 [CONTRIBUTING.md](CONTRIBUTING.md) 了解代码规范与提交流程。

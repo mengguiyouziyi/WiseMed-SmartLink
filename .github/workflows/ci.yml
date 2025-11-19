@@ -11,19 +11,39 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install confluent-kafka jiwer
-      - name: Lint placeholder
+          pip install flake8 pytest httpx confluent-kafka requests
+          if [ -f services/auth-service/requirements.txt ]; then pip install -r services/auth-service/requirements.txt; fi
+          if [ -f services/pacs-gw-service/requirements.txt ]; then pip install -r services/pacs-gw-service/requirements.txt; fi
+          # ai-infer-service deps might be heavy, install selectively if needed or use separate job
+          
+      - name: Lint with flake8
         run: |
-          echo "No code yet - placeholder lint"
-      - name: Run metrics scripts smoke test
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 services/ --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 services/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+          
+      - name: Test with pytest
         run: |
-          make asr
-      - name: Generate SBOM (placeholder)
+          pytest services/
+          
+      - name: Install Syft and Grype
         run: |
-          echo "SBOM generation placeholder"
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+          
+      - name: Build and Scan PACS Gateway
+        run: |
+          docker build -t pacs-gw-service:latest services/pacs-gw-service
+          syft pacs-gw-service:latest -o cyclonedx-json > sbom.json
+          grype sbom.json --fail-on medium-only
+

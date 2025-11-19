@@ -1,0 +1,4 @@
+[
+  "services/pacs-gw-service/tests/test_main.py::test_health_check",
+  "services/pacs-gw-service/tests/test_main.py::test_hello"
+]

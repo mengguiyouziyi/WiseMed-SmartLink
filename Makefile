@@ -17,3 +17,30 @@ metrics:
 
 asr:
 	python3 scripts/metrics/asr_metrics.py --ref data/reference.csv --hyp data/asr_logs.jsonl --terms 肺结节 血糖
+
+metricasr:
+	python3 scripts/metrics/asr_metrics.py
+
+lint:
+	flake8 services/
+
+test:
+	pytest services/
+
+sbom:
+	syft services/pacs-gw-service -o cyclonedx-json > sbom.json
+
+scan:
+	grype sbom.json
+
+help:
+	@echo "Usage: make [target]"
+	@echo "  compose-up    Start the PoC environment"
+	@echo "  compose-edge  Start the Edge environment"
+	@echo "  metrics       Run the metrics extraction script"
+	@echo "  asr           Run the ASR metrics script"
+	@echo "  metricasr     Run the ASR metrics script (default)"
+	@echo "  lint          Run flake8 linting"
+	@echo "  test          Run pytest"
+	@echo "  sbom          Generate SBOM for pacs-gw-service (requires syft)"
+	@echo "  scan          Scan SBOM for vulnerabilities (requires grype)"
