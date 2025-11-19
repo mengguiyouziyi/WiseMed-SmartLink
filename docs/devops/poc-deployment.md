@@ -6,7 +6,15 @@
 - **边缘节点**：RK3588 + K3s agent 或 Docker；必要时使用轻量 runtime (containerd + nerdctl)。
 
 ## 2. Docker Compose (dev)
-`infra/docker/docker-compose.yml`
+参考 `infra/docker/docker-compose.yml`，包含 Redpanda、PostgreSQL、MinIO、Keycloak、Orthanc、MONAI 推理、ESPnet、Bahmni、Grafana 等组件。
+
+### 运行
+```bash
+cd infra/docker
+docker compose up -d # 默认central profile
+docker compose --profile edge up -d # 边缘最小集（orthanc+monai+espnet）
+```
+如需要 GPU 推理请确保宿主安装 nvidia-container-toolkit，并设置 `NVIDIA_VISIBLE_DEVICES=all`。
 ```
 version: "3.9"
 services:
@@ -46,7 +54,11 @@ services:
 - 入口：Nginx Ingress / Traefik；mTLS between services。
 - 存储：
   - Ceph/Rook 或 Longhorn 提供 RWX 卷。
-  - Edge 节点使用本地 NVMe + rsync 备份。
+- Edge 节点使用本地 NVMe + rsync 备份。
+
+### 配置
+- `.env`：复制 `infra/docker/.env.example`（待创建）并填充敏感信息。
+- Keycloak/Bahmni 初始化脚本可放置于 `infra/docker/init/`。
 
 ### 关键组件
 - `infra/k8s/base`：
