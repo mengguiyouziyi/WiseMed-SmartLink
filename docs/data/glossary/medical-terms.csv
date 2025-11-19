@@ -1,0 +1,22 @@
+term,category,zh_CN,hebei_dialect,en,notes
+血糖,慢病管理,血糖,血糖儿,Blood Glucose,常见用于糖尿病
+胰岛素,用药,胰岛素,胰岛素,Blood Insulin,需强调剂量
+高血压,慢病,高血压,高血压,Hypertension,
+咳嗽,主诉,咳嗽,咳嗽, Cough,
+发烧,主诉,发热,发烧,Fever,
+肺结节,影像,肺结节,肺疙瘩,Lung Nodule,
+CT,影像,CT,CT,CT,保留英文
+核磁共振,影像,核磁,核磁,MR,
+药物过敏,安全提示,药物过敏,药犯,Drug Allergy,
+妊娠,安全提示,妊娠,怀胎,Pregnancy,
+宗教禁忌,安全提示,宗教禁忌,教门忌,Riligious Taboo,
+剂量,用药,剂量,药量,Dosage,
+每日三次,用药,每日三次,天天三回,Three times a day,
+禁食,用药,禁食,莫吃禁口,Fasting,
+翻译转人工,流程,翻译转人工,转人工,Escalate to human,
+低置信度,流程,低置信度,没把握,Low Confidence,
+注射,操作,注射,打针,Injection,
+输液,操作,输液,吊水,Infusion,
+随访,流程,随访,回访,Follow-up,
+医保控费,政策,医保控费,医保卡控费,Insurance Cost Control,
+医共体,政策,医共体,医共体,Medical Alliance,
