@@ -1,0 +1,18 @@
+# Medical hotwords for ASR
+# Format: one term per line
+肺结节
+pulmonary nodule
+冠心病
+coronary heart disease
+高血压
+hypertension
+糖尿病
+diabetes
+心肌梗死
+myocardial infarction
+脑卒中
+stroke
+肿瘤
+tumor
+癌症
+cancer

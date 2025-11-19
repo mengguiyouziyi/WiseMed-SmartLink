@@ -1,4 +1,6 @@
 [
   "services/pacs-gw-service/tests/test_main.py::test_health_check",
-  "services/pacs-gw-service/tests/test_main.py::test_hello"
+  "services/pacs-gw-service/tests/test_main.py::test_hello",
+  "services/translation-service/tests/test_translation.py::test_health_check",
+  "services/translation-service/tests/test_translation.py::test_translate_endpoint"
 ]
