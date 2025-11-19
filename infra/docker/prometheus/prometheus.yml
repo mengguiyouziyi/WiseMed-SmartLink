@@ -1,0 +1,58 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'wisemed-smartlink'
+    environment: 'poc'
+
+# 告警规则文件
+rule_files:
+  # - "alerts.yml"
+
+# 抓取配置
+scrape_configs:
+  # Prometheus 自身监控
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # 核心服务监控
+  - job_name: 'auth-service'
+    static_configs:
+      - targets: ['auth-service:8000']
+    metrics_path: '/metrics'
+    
+  - job_name: 'ai-infer-service'
+    static_configs:
+      - targets: ['ai-infer-service:8000']
+    metrics_path: '/metrics'
+    
+  - job_name: 'pacs-gw-service'
+    static_configs:
+      - targets: ['pacs-gw-service:8000']
+    metrics_path: '/metrics'
+    
+  - job_name: 'translation-service'
+    static_configs:
+      - targets: ['translation-service:8000']
+    metrics_path: '/metrics'
+
+  # 基础设施服务监控
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres:5432']
+    
+  - job_name: 'redpanda'
+    static_configs:
+      - targets: ['redpanda:9644']
+    metrics_path: '/metrics'
+    
+  - job_name: 'minio'
+    static_configs:
+      - targets: ['minio:9000']
+    metrics_path: '/minio/v2/metrics/cluster'
+    
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']
+    metrics_path: '/metrics'
