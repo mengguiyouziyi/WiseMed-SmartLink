@@ -24,7 +24,8 @@ import {
     ShieldAlert,
     Database,
     Sparkles,
-    Calendar
+    Calendar,
+    Clipboard
 } from 'lucide-react';
 import { NavigationConfig } from '@/types/navigation';
 
@@ -44,6 +45,7 @@ export const navigationConfig: NavigationConfig = {
                 { id: 'appointments', label: '预约管理', path: '/clinical/appointments', icon: Calendar },
                 { id: 'registration', label: '患者登记', path: '/clinical/patient-registration', icon: UserPlus },
                 { id: 'emr', label: '电子病历', path: '/clinical/emr', icon: FileText },
+                { id: 'prescription', label: '诊疗开单', path: '/clinical/prescription', icon: Clipboard },
                 { id: 'imaging', label: '智能影像', path: '/imaging', icon: Brain },
                 { id: 'clinic', label: '全球诊所', path: '/clinical/clinic', icon: Globe },
                 { id: 'vitals', label: '生命体征', path: '/clinical/vitals', icon: Activity },
