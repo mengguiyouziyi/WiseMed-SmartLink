@@ -10,13 +10,33 @@ from Levenshtein import ratio
 logger = logging.getLogger(__name__)
 
 
+from transformers import pipeline
+
+class HuggingFaceTranslator:
+    def __init__(self, model_name="Helsinki-NLP/opus-mt-zh-en", device="cpu"):
+        self.device = 0 if device == "cuda" else -1
+        try:
+            self.pipe = pipeline("translation", model=model_name, device=self.device)
+            logger.info(f"Loaded translation model: {model_name}")
+        except Exception as e:
+            logger.error(f"Failed to load translation model: {e}")
+            self.pipe = None
+
+    def translate(self, text: str) -> str:
+        if not self.pipe:
+            return text
+        try:
+            # Split long text if necessary, here we assume short segments for PoC
+            result = self.pipe(text)
+            return result[0]['translation_text']
+        except Exception as e:
+            logger.error(f"NMT translation failed: {e}")
+            return text
+
 class MedicalTranslator:
     def __init__(self, terminology_path: str = None):
         """
-        Initialize medical translator with terminology database.
-
-        Args:
-            terminology_path: Path to medical terms CSV file
+        Initialize medical translator with terminology database and NMT model.
         """
         self.terminology_path = (
             terminology_path or
@@ -24,6 +44,9 @@ class MedicalTranslator:
         )
         self.terms_df = None
         self.load_terminology()
+        
+        # Initialize NMT
+        self.nmt = HuggingFaceTranslator()
 
     def load_terminology(self):
         """Load medical terminology from CSV file."""
@@ -56,75 +79,32 @@ class MedicalTranslator:
         threshold: float = 0.8
     ) -> Dict:
         """
-        Translate text using medical terminology matching.
-
-        Args:
-            text: Input text to translate
-            source_lang: Source language code
-            target_lang: Target language code
-            fuzzy_match: Enable fuzzy matching
-            threshold: Fuzzy match threshold (0-1)
-
-        Returns:
-            dict with 'translated_text' and 'matched_terms'
+        Translate text using NMT + Medical Terminology.
         """
-        if self.terms_df is None or len(self.terms_df) == 0:
-            return {
-                "translated_text": text,
-                "matched_terms": []
-            }
-
+        # 1. Perform NMT translation first
+        nmt_result = self.nmt.translate(text)
+        
+        # 2. Terminology matching (for highlighting/verification)
         matched_terms = []
-        translated_text = text
+        
+        if self.terms_df is not None and len(self.terms_df) > 0:
+            # Exact matching on source text to find medical terms
+            for _, row in self.terms_df.iterrows():
+                source_term = row.get("chinese", "")
+                target_term = row.get("english", "")
 
-        # Exact matching first
-        for _, row in self.terms_df.iterrows():
-            source_term = row.get("chinese", "")
-            target_term = row.get("english", "")
-
-            if source_term and source_term in text:
-                matched_terms.append({
-                    "term": source_term,
-                    "translation": target_term,
-                    "confidence": 1.0,
-                    "match_type": "exact"
-                })
-                translated_text = translated_text.replace(
-                    source_term,
-                    target_term
-                )
-
-        # Fuzzy matching for unmatched parts
-        if fuzzy_match:
-            words = text.split()
-            for word in words:
-                if len(word) < 2:
-                    continue
-
-                best_match = None
-                best_score = 0.0
-
-                for _, row in self.terms_df.iterrows():
-                    source_term = row.get("chinese", "")
-                    if not source_term:
-                        continue
-
-                    score = ratio(word, source_term)
-                    if score > threshold and score > best_score:
-                        best_score = score
-                        best_match = row
-
-                if best_match is not None:
+                if source_term and source_term in text:
                     matched_terms.append({
-                        "term": word,
-                        "translation": best_match.get("english", ""),
-                        "confidence": best_score,
-                        "match_type": "fuzzy"
+                        "term": source_term,
+                        "translation": target_term,
+                        "confidence": 1.0,
+                        "match_type": "exact"
                     })
 
         return {
-            "translated_text": translated_text,
-            "matched_terms": matched_terms
+            "translated_text": nmt_result,
+            "matched_terms": matched_terms,
+            "original_text": text
         }
 
     def search_terms(

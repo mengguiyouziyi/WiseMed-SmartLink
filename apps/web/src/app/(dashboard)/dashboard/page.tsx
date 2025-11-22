@@ -6,16 +6,16 @@ import { Activity, Users, FileText, Server } from 'lucide-react';
 import styles from './page.module.css';
 
 const STATS = [
-    { label: 'Active Sessions', value: '12', icon: Users, color: 'text-blue-500' },
-    { label: 'Images Processed', value: '1,284', icon: FileText, color: 'text-green-500' },
-    { label: 'System Status', value: 'Healthy', icon: Activity, color: 'text-emerald-500' },
-    { label: 'API Latency', value: '45ms', icon: Server, color: 'text-purple-500' },
+    { label: '活跃会话', value: '12', icon: Users, color: 'text-blue-500' },
+    { label: '已处理影像', value: '1,284', icon: FileText, color: 'text-green-500' },
+    { label: '系统状态', value: '健康', icon: Activity, color: 'text-emerald-500' },
+    { label: 'API 延迟', value: '45ms', icon: Server, color: 'text-purple-500' },
 ];
 
 export default function DashboardPage() {
     return (
         <div className={styles.container}>
-            <h1 className={styles.heading}>System Overview</h1>
+            <h1 className={styles.heading}>系统概览</h1>
 
             <div className={styles.grid}>
                 {STATS.map((stat) => {
@@ -39,11 +39,11 @@ export default function DashboardPage() {
             <div className={styles.section}>
                 <Card className={styles.chartCard}>
                     <CardHeader>
-                        <CardTitle>Recent Activity</CardTitle>
+                        <CardTitle>近期活动</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className={styles.placeholderChart}>
-                            Chart Placeholder (Recharts/Chart.js integration coming soon)
+                            图表占位符 (即将集成 Recharts/Chart.js)
                         </div>
                     </CardContent>
                 </Card>

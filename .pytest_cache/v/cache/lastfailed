@@ -1,4 +1,5 @@
 {
+  "services/translation-service/tests/test_translation.py": true,
   "services/translation-service/tests/test_translation.py::test_health_check": true,
   "services/translation-service/tests/test_translation.py::test_translate_endpoint": true
 }

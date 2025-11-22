@@ -1,0 +1,5 @@
+[
+  "tests/test_auth.py::test_health_check",
+  "tests/test_auth.py::test_read_users_me_unauthorized",
+  "tests/test_auth.py::test_read_users_me_authorized"
+]

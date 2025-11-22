@@ -1,0 +1,31 @@
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-multipart==0.0.6
+
+# AI/ML 框架
+torch==2.2.1
+torchaudio==2.2.1
+transformers==4.37.2
+sentencepiece==0.1.99
+sacremoses==0.1.1
+
+# 语音识别
+openai-whisper==20231117
+faster-whisper==0.10.0
+
+# 语音合成 (TTS)
+TTS==0.22.0
+
+# 工具库
+numpy==1.26.4
+scipy==1.12.0
+librosa==0.10.1
+soundfile==0.12.1
+pydub==0.25.1
+
+# 数据库与缓存
+redis==5.0.1
+psycopg2-binary==2.9.9
+
+# 监控
+prometheus-client==0.19.0

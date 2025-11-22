@@ -1,0 +1,142 @@
+# API 配置文件
+# 支持本地部署服务和外部 API
+
+# ========== 语音识别 (ASR) ==========
+asr:
+  # 默认提供商: local (本地), openai, azure, google
+  provider: local
+  
+  # 本地服务配置
+  local:
+    endpoint: http://asr-tts-nmt-service:8000/transcribe
+    model: whisper-large-v3
+    device: cuda
+  
+  # OpenAI Whisper API
+  openai:
+    api_key: ${OPENAI_API_KEY}
+    endpoint: https://api.openai.com/v1/audio/transcriptions
+    model: whisper-1
+  
+  # Azure Speech Service
+  azure:
+    api_key: ${AZURE_SPEECH_KEY}
+    region: ${AZURE_SPEECH_REGION}
+    endpoint: https://${AZURE_SPEECH_REGION}.api.cognitive.microsoft.com/speechtotext/v3.0/transcriptions
+  
+  # Google Cloud Speech-to-Text
+  google:
+    credentials_path: ${GOOGLE_APPLICATION_CREDENTIALS}
+    endpoint: https://speech.googleapis.com/v1/speech:recognize
+
+# ========== 机器翻译 (NMT) ==========
+translation:
+  provider: local
+  
+  local:
+    endpoint: http://asr-tts-nmt-service:8000/translate
+    model: opus-mt-zh-en
+  
+  # Google Translate API
+  google:
+    api_key: ${GOOGLE_TRANSLATE_API_KEY}
+    endpoint: https://translation.googleapis.com/language/translate/v2
+  
+  # DeepL API
+  deepl:
+    api_key: ${DEEPL_API_KEY}
+    endpoint: https://api-free.deepl.com/v2/translate
+  
+  # Baidu Translate API
+  baidu:
+    app_id: ${BAIDU_TRANSLATE_APP_ID}
+    api_key: ${BAIDU_TRANSLATE_API_KEY}
+    endpoint: https://fanyi-api.baidu.com/api/trans/vip/translate
+
+# ========== 语音合成 (TTS) ==========
+tts:
+  provider: local
+  
+  local:
+    endpoint: http://asr-tts-nmt-service:8000/synthesize
+    model: vits-chinese
+  
+  # Azure TTS
+  azure:
+    api_key: ${AZURE_SPEECH_KEY}
+    region: ${AZURE_SPEECH_REGION}
+    endpoint: https://${AZURE_SPEECH_REGION}.tts.speech.microsoft.com/cognitiveservices/v1
+  
+  # Google Cloud TTS
+  google:
+    credentials_path: ${GOOGLE_APPLICATION_CREDENTIALS}
+    endpoint: https://texttospeech.googleapis.com/v1/text:synthesize
+
+# ========== 医疗影像分析 (Medical Imaging) ==========
+medical_imaging:
+  provider: local
+  
+  local:
+    endpoint: http://ai-infer-service:8000/analyze
+    models:
+      lung_nodule: monai-densenet121
+      bone_fracture: yolov8
+      tumor_segmentation: nnu-net
+  
+  # 第三方医疗 AI API
+  external:
+    api_key: ${MEDICAL_AI_API_KEY}
+    endpoint: https://api.medical-ai.com/v1/analyze
+
+# ========== 通用 AI 推理 ==========
+ai_inference:
+  # OpenAI GPT
+  openai:
+    api_key: ${OPENAI_API_KEY}
+    endpoint: https://api.openai.com/v1/chat/completions
+    model: gpt-4
+  
+  # Azure OpenAI
+  azure_openai:
+    api_key: ${AZURE_OPENAI_KEY}
+    endpoint: ${AZURE_OPENAI_ENDPOINT}
+    deployment_name: ${AZURE_OPENAI_DEPLOYMENT}
+  
+  # 本地 LLM (如 Ollama)
+  local_llm:
+    endpoint: http://localhost:11434/api/generate
+    model: llama2
+
+# ========== 图像识别 ==========
+image_recognition:
+  # Google Vision API
+  google:
+    credentials_path: ${GOOGLE_APPLICATION_CREDENTIALS}
+    endpoint: https://vision.googleapis.com/v1/images:annotate
+  
+  # Azure Computer Vision
+  azure:
+    api_key: ${AZURE_VISION_KEY}
+    endpoint: ${AZURE_VISION_ENDPOINT}/vision/v3.2/analyze
+  
+  # 本地模型
+  local:
+    endpoint: http://localhost:8006/recognize
+
+# ========== 配置管理 ==========
+config:
+  # 是否启用 API 密钥加密存储
+  encrypt_keys: true
+  
+  # API 调用超时（秒）
+  timeout: 30
+  
+  # 重试次数
+  max_retries: 3
+  
+  # 是否启用请求日志
+  enable_logging: true
+  
+  # 是否启用缓存
+  enable_cache: true
+  cache_ttl: 3600  # 缓存过期时间（秒）

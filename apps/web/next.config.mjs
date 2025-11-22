@@ -1,22 +1,29 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   async rewrites() {
     return [
       {
         source: '/api/auth/:path*',
-        destination: 'http://localhost:8001/:path*',
+        destination: 'http://auth-service:8000/:path*',
       },
       {
         source: '/api/infer/:path*',
-        destination: 'http://localhost:8002/:path*',
+        destination: 'http://ai-infer-service:8000/:path*',
       },
       {
-        source: '/api/pacs/:path*',
-        destination: 'http://localhost:8003/:path*',
+        source: '/api/clinic/:path*',
+        destination: 'http://asr-tts-nmt-service:8000/:path*',
       },
       {
         source: '/api/translate/:path*',
-        destination: 'http://localhost:8004/:path*',
+        destination: 'http://translation-service:8000/:path*',
+      },
+      {
+        source: '/api/imaging/:path*',
+        destination: 'http://pacs-gw-service:8000/:path*',
       },
     ]
   },

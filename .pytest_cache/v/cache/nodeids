@@ -1,6 +1,9 @@
 [
+  "services/ai-infer-service/tests/test_inference.py::test_health_check",
+  "services/ai-infer-service/tests/test_inference.py::test_infer_endpoint",
+  "services/auth-service/tests/test_auth.py::test_health_check",
+  "services/auth-service/tests/test_auth.py::test_read_users_me_unauthorized",
+  "services/auth-service/tests/test_auth.py::test_read_users_me_authorized",
   "services/pacs-gw-service/tests/test_main.py::test_health_check",
-  "services/pacs-gw-service/tests/test_main.py::test_hello",
-  "services/translation-service/tests/test_translation.py::test_health_check",
-  "services/translation-service/tests/test_translation.py::test_translate_endpoint"
+  "services/pacs-gw-service/tests/test_main.py::test_hello"
 ]

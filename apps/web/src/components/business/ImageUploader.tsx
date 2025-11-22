@@ -77,10 +77,10 @@ export function ImageUploader({
                     onDrop={handleDrop}
                 >
                     <Upload className={styles.uploadIcon} size={48} />
-                    <p className={styles.title}>Drag & Drop Image</p>
-                    <p className={styles.subtitle}>or click to browse</p>
+                    <p className={styles.title}>拖放影像文件</p>
+                    <p className={styles.subtitle}>或点击浏览</p>
                     <p className={styles.formats}>
-                        Supported: {acceptedFormats.join(', ')}
+                        支持格式: {acceptedFormats.join(', ')}
                     </p>
                     <input
                         type="file"
@@ -105,7 +105,7 @@ export function ImageUploader({
                             onClick={clearFile}
                             leftIcon={<X size={16} />}
                         >
-                            Remove
+                            移除
                         </Button>
                     </div>
 

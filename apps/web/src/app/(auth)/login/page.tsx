@@ -31,10 +31,10 @@ export default function LoginPage() {
                 await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay
                 login(username, 'mock-token');
             } else {
-                throw new Error('Invalid credentials');
+                throw new Error('用户名或密码错误');
             }
         } catch (err: any) {
-            setError(err.message || 'Login failed');
+            setError(err.message || '登录失败');
         } finally {
             setIsLoading(false);
         }
@@ -52,25 +52,25 @@ export default function LoginPage() {
                     <div className={styles.logo}>
                         <Activity size={48} className={styles.logoIcon} />
                     </div>
-                    <CardTitle className={styles.title}>WiseMed Enterprise</CardTitle>
-                    <p className={styles.subtitle}>Secure Access Portal</p>
+                    <CardTitle className={styles.title}>慧医智联企业版</CardTitle>
+                    <p className={styles.subtitle}>安全访问门户</p>
                 </CardHeader>
 
                 <CardContent>
                     <form onSubmit={handleSubmit} className={styles.form}>
                         <Input
-                            label="Username"
+                            label="用户名"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            placeholder="Enter your username"
+                            placeholder="请输入用户名"
                             required
                         />
                         <Input
-                            label="Password"
+                            label="密码"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Enter your password"
+                            placeholder="请输入密码"
                             required
                         />
 
@@ -82,7 +82,7 @@ export default function LoginPage() {
                             isLoading={isLoading}
                             leftIcon={<Lock size={16} />}
                         >
-                            Sign In
+                            登录
                         </Button>
                     </form>
                 </CardContent>

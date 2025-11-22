@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY requirements.txt .
 # Install torch cpu version for lighter container in PoC
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -i https://pypi.douban.com/simple/ -r requirements.txtps://pypi.douban.com/simple/ -r requirements.txt
 
 COPY . .
 

@@ -78,13 +78,13 @@ export function AudioRecorder({ onRecordingComplete, isProcessing = false }: Aud
                         size="lg"
                         leftIcon={isProcessing ? <Loader2 className={styles.spinner} size={20} /> : <Mic size={20} />}
                     >
-                        {isProcessing ? 'Processing...' : 'Start Recording'}
+                        {isProcessing ? '处理中...' : '开始录音'}
                     </Button>
                 ) : (
                     <>
                         <div className={styles.recordingIndicator}>
                             <div className={styles.pulse} />
-                            <span className={styles.recordingText}>Recording...</span>
+                            <span className={styles.recordingText}>录音中...</span>
                             <span className={styles.timer}>{formatTime(recordingTime)}</span>
                         </div>
                         <Button
@@ -93,7 +93,7 @@ export function AudioRecorder({ onRecordingComplete, isProcessing = false }: Aud
                             size="lg"
                             leftIcon={<Square size={20} />}
                         >
-                            Stop
+                            停止
                         </Button>
                     </>
                 )}

@@ -1,0 +1,15 @@
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+pyyaml==6.0.1
+python-multipart==0.0.6
+
+# 数据库
+sqlalchemy==2.0.25
+psycopg2-binary==2.9.9
+
+# 加密
+cryptography==41.0.7
+
+# 监控
+prometheus-client==0.19.0
