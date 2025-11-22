@@ -3,329 +3,245 @@
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Users, Plus, Edit, Trash2, Search, Shield, Mail, Phone } from 'lucide-react';
-import styles from './page.module.css';
+import { Users, Plus, Search, Edit, Trash2, Shield, Mail, Phone } from 'lucide-react';
 
 interface User {
   id: string;
-  username: string;
   name: string;
   email: string;
   phone: string;
   role: string;
   department: string;
   status: 'active' | 'inactive';
-  lastLogin: string;
   createdAt: string;
 }
 
-export default function UsersPage() {
+export default function UserManagementPage() {
   const [users, setUsers] = useState<User[]>([
-    {
-      id: '1',
-      username: 'admin',
-      name: '系统管理员',
-      email: 'admin@wisemed.com',
-      phone: '138****8888',
-      role: '超级管理员',
-      department: '技术部',
-      status: 'active',
-      lastLogin: '2 分钟前',
-      createdAt: '2024-01-01',
-    },
-    {
-      id: '2',
-      username: 'doctor_zhang',
-      name: '张医生',
-      email: 'zhang@wisemed.com',
-      phone: '139****6666',
-      role: '医生',
-      department: '影像科',
-      status: 'active',
-      lastLogin: '1 小时前',
-      createdAt: '2024-03-15',
-    },
-    {
-      id: '3',
-      username: 'nurse_li',
-      name: '李护士',
-      email: 'li@wisemed.com',
-      phone: '136****5555',
-      role: '护士',
-      department: '门诊部',
-      status: 'active',
-      lastLogin: '3 小时前',
-      createdAt: '2024-05-20',
-    },
-    {
-      id: '4',
-      username: 'tech_wang',
-      name: '王工程师',
-      email: 'wang@wisemed.com',
-      phone: '137****7777',
-      role: '技术支持',
-      department: '技术部',
-      status: 'inactive',
-      lastLogin: '2 天前',
-      createdAt: '2024-02-10',
-    },
+    { id: '1', name: '张医生', email: 'zhang@hospital.com', phone: '138****1234', role: 'doctor', department: '内科', status: 'active', createdAt: '2025-01-15' },
+    { id: '2', name: '李护士', email: 'li@hospital.com', phone: '139****5678', role: 'nurse', department: '急诊科', status: 'active', createdAt: '2025-02-20' },
+    { id: '3', name: '王管理员', email: 'wang@hospital.com', phone: '136****9012', role: 'admin', department: '信息科', status: 'active', createdAt: '2025-01-01' },
+    { id: '4', name: '赵医生', email: 'zhao@hospital.com', phone: '137****3456', role: 'doctor', department: '外科', status: 'inactive', createdAt: '2025-03-10' },
   ]);
-
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
-  const [editingUser, setEditingUser] = useState<User | null>(null);
 
   const filteredUsers = users.filter(user =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    user.name.includes(searchTerm) ||
+    user.email.includes(searchTerm) ||
+    user.department.includes(searchTerm)
   );
 
-  const handleDelete = (userId: string) => {
-    if (confirm('确定要删除此用户吗？')) {
-      setUsers(users.filter(u => u.id !== userId));
-    }
-  };
-
-  const handleToggleStatus = (userId: string) => {
-    setUsers(users.map(u => {
-      if (u.id === userId) {
-        return { ...u, status: u.status === 'active' ? 'inactive' : 'active' as User['status'] };
-      }
-      return u;
-    }));
-  };
-
-  const getRoleBadgeColor = (role: string) => {
-    switch (role) {
-      case '超级管理员':
-        return styles.roleAdmin;
-      case '医生':
-        return styles.roleDoctor;
-      case '护士':
-        return styles.roleNurse;
-      default:
-        return styles.roleDefault;
-    }
+  const getRoleBadge = (role: string) => {
+    const badges = {
+      admin: { label: '管理员', class: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300' },
+      doctor: { label: '医生', class: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
+      nurse: { label: '护士', class: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300' },
+    };
+    return badges[role as keyof typeof badges] || { label: role, class: 'bg-gray-100 text-gray-700' };
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <div>
-          <h1 className={styles.heading}>
-            <Users size={32} />
-            用户管理
-          </h1>
-          <p className={styles.subtitle}>
-            管理系统用户和权限
-          </p>
-        </div>
-        <Button leftIcon={<Plus size={20} />} onClick={() => setShowAddModal(true)}>
-          添加用户
-        </Button>
-      </div>
-
-      {/* 统计卡片 */}
-      <div className={styles.statsGrid}>
-        <Card className={styles.statCard}>
-          <CardContent>
-            <div className={styles.statIcon}>
-              <Users size={24} />
+    <div className="p-8 max-w-[1800px] mx-auto">
+      <div className="mb-10">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl shadow-lg">
+              <Users size={36} className="text-white" />
             </div>
-            <div className={styles.statInfo}>
-              <div className={styles.statValue}>{users.length}</div>
-              <div className={styles.statLabel}>总用户数</div>
+            <div>
+              <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+                用户管理
+              </h1>
+              <p className="text-lg text-gray-600 dark:text-gray-400 mt-1">
+                管理系统用户、角色和权限
+              </p>
             </div>
-          </CardContent>
-        </Card>
-
-        <Card className={styles.statCard}>
-          <CardContent>
-            <div className={styles.statIcon} style={{ background: 'var(--success-bg)' }}>
-              <Users size={24} style={{ color: 'var(--success)' }} />
-            </div>
-            <div className={styles.statInfo}>
-              <div className={styles.statValue}>{users.filter(u => u.status === 'active').length}</div>
-              <div className={styles.statLabel}>活跃用户</div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className={styles.statCard}>
-          <CardContent>
-            <div className={styles.statIcon} style={{ background: 'var(--warning-bg)' }}>
-              <Shield size={24} style={{ color: 'var(--warning)' }} />
-            </div>
-            <div className={styles.statInfo}>
-              <div className={styles.statValue}>{users.filter(u => u.role === '超级管理员').length}</div>
-              <div className={styles.statLabel}>管理员</div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className={styles.statCard}>
-          <CardContent>
-            <div className={styles.statIcon} style={{ background: 'var(--info-bg)' }}>
-              <Users size={24} style={{ color: 'var(--info)' }} />
-            </div>
-            <div className={styles.statInfo}>
-              <div className={styles.statValue}>{users.filter(u => u.role === '医生').length}</div>
-              <div className={styles.statLabel}>医生</div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* 搜索和筛选 */}
-      <Card className={styles.searchCard}>
-        <CardContent>
-          <div className={styles.searchBar}>
-            <Search size={20} />
-            <input
-              type="text"
-              placeholder="搜索用户名、姓名或邮箱..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className={styles.searchInput}
-            />
           </div>
-        </CardContent>
-      </Card>
+          <Button onClick={() => setShowAddModal(true)} className="px-6 py-3">
+            <Plus size={20} className="mr-2" />
+            新增用户
+          </Button>
+        </div>
+      </div>
 
-      {/* 用户列表 */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <Card className="hover:shadow-lg transition-shadow">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                  总用户数
+                </p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-white">
+                  {users.length}
+                </p>
+              </div>
+              <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
+                <Users size={24} className="text-blue-600 dark:text-blue-400" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="hover:shadow-lg transition-shadow">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                  活跃用户
+                </p>
+                <p className="text-3xl font-bold text-green-600 dark:text-green-400">
+                  {users.filter(u => u.status === 'active').length}
+                </p>
+              </div>
+              <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-xl">
+                <Users size={24} className="text-green-600 dark:text-green-400" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="hover:shadow-lg transition-shadow">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                  医生
+                </p>
+                <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+                  {users.filter(u => u.role === 'doctor').length}
+                </p>
+              </div>
+              <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
+                <Shield size={24} className="text-blue-600 dark:text-blue-400" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="hover:shadow-lg transition-shadow">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                  管理员
+                </p>
+                <p className="text-3xl font-bold text-purple-600 dark:text-purple-400">
+                  {users.filter(u => u.role === 'admin').length}
+                </p>
+              </div>
+              <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-xl">
+                <Shield size={24} className="text-purple-600 dark:text-purple-400" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       <Card>
-        <CardHeader>
-          <CardTitle>用户列表 ({filteredUsers.length})</CardTitle>
+        <CardHeader className="border-b border-gray-200 dark:border-gray-700 pb-4">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-2xl font-bold">用户列表</CardTitle>
+            <div className="relative w-80">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <input
+                type="text"
+                placeholder="搜索用户、邮箱或科室..."
+                className="w-full pl-10 pr-4 py-2 rounded-lg border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 dark:focus:ring-primary-900/30 transition-all"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
         </CardHeader>
-        <CardContent>
-          <div className={styles.tableContainer}>
-            <table className={styles.table}>
-              <thead>
+        <CardContent className="pt-6">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50 dark:bg-gray-800">
                 <tr>
-                  <th>用户名</th>
-                  <th>姓名</th>
-                  <th>角色</th>
-                  <th>部门</th>
-                  <th>联系方式</th>
-                  <th>状态</th>
-                  <th>最后登录</th>
-                  <th>操作</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                    用户
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                    联系方式
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                    角色
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                    科室
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                    状态
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                    操作
+                  </th>
                 </tr>
               </thead>
-              <tbody>
-                {filteredUsers.map((user) => (
-                  <tr key={user.id}>
-                    <td>
-                      <div className={styles.username}>
-                        <Users size={16} />
-                        <span>{user.username}</span>
-                      </div>
-                    </td>
-                    <td>{user.name}</td>
-                    <td>
-                      <span className={`${styles.roleBadge} ${getRoleBadgeColor(user.role)}`}>
-                        {user.role}
-                      </span>
-                    </td>
-                    <td>{user.department}</td>
-                    <td>
-                      <div className={styles.contact}>
-                        <div>
-                          <Mail size={14} />
-                          <span>{user.email}</span>
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                {filteredUsers.map((user) => {
+                  const roleBadge = getRoleBadge(user.role);
+                  return (
+                    <tr key={user.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-white font-semibold">
+                            {user.name[0]}
+                          </div>
+                          <div>
+                            <p className="font-semibold text-gray-900 dark:text-white">{user.name}</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">ID: {user.id}</p>
+                          </div>
                         </div>
-                        <div>
-                          <Phone size={14} />
-                          <span>{user.phone}</span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                            <Mail size={14} />
+                            <span>{user.email}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                            <Phone size={14} />
+                            <span>{user.phone}</span>
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                    <td>
-                      <button
-                        className={`${styles.statusBadge} ${user.status === 'active' ? styles.statusActive : styles.statusInactive}`}
-                        onClick={() => handleToggleStatus(user.id)}
-                      >
-                        {user.status === 'active' ? '活跃' : '停用'}
-                      </button>
-                    </td>
-                    <td>{user.lastLogin}</td>
-                    <td>
-                      <div className={styles.actions}>
-                        <button
-                          className={styles.actionBtn}
-                          onClick={() => setEditingUser(user)}
-                          title="编辑"
-                        >
-                          <Edit size={16} />
-                        </button>
-                        <button
-                          className={styles.actionBtn}
-                          onClick={() => handleDelete(user.id)}
-                          title="删除"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`px-3 py-1 rounded-full text-sm font-semibold ${roleBadge.class}`}>
+                          {roleBadge.label}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="text-gray-900 dark:text-white font-medium">{user.department}</span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`px-3 py-1 rounded-full text-sm font-semibold ${user.status === 'active'
+                            ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
+                            : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
+                          }`}>
+                          {user.status === 'active' ? '活跃' : '停用'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-2">
+                          <button className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors">
+                            <Edit size={18} />
+                          </button>
+                          <button className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
+                            <Trash2 size={18} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
         </CardContent>
       </Card>
-
-      {/* 添加/编辑用户模态框 */}
-      {(showAddModal || editingUser) && (
-        <div className={styles.modal} onClick={() => { setShowAddModal(false); setEditingUser(null); }}>
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <h2>{editingUser ? '编辑用户' : '添加新用户'}</h2>
-            <p className={styles.modalDesc}>填写用户信息</p>
-
-            <div className={styles.form}>
-              <div className={styles.formGroup}>
-                <label>用户名</label>
-                <input type="text" placeholder="输入用户名" defaultValue={editingUser?.username} />
-              </div>
-              <div className={styles.formGroup}>
-                <label>姓名</label>
-                <input type="text" placeholder="输入姓名" defaultValue={editingUser?.name} />
-              </div>
-              <div className={styles.formGroup}>
-                <label>邮箱</label>
-                <input type="email" placeholder="输入邮箱" defaultValue={editingUser?.email} />
-              </div>
-              <div className={styles.formGroup}>
-                <label>电话</label>
-                <input type="tel" placeholder="输入电话" defaultValue={editingUser?.phone} />
-              </div>
-              <div className={styles.formGroup}>
-                <label>角色</label>
-                <select defaultValue={editingUser?.role}>
-                  <option>超级管理员</option>
-                  <option>医生</option>
-                  <option>护士</option>
-                  <option>技术支持</option>
-                </select>
-              </div>
-              <div className={styles.formGroup}>
-                <label>部门</label>
-                <input type="text" placeholder="输入部门" defaultValue={editingUser?.department} />
-              </div>
-            </div>
-
-            <div className={styles.modalActions}>
-              <Button variant="secondary" onClick={() => { setShowAddModal(false); setEditingUser(null); }}>
-                取消
-              </Button>
-              <Button>
-                {editingUser ? '保存' : '添加'}
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
